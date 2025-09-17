@@ -3,7 +3,13 @@
 public class Department
 {
     private List<Department> _children = [];
-    public Department(Name name,
+
+    private List<DepartmentLocation> _departmentLocations = [];
+
+    private List<DepartmentPosition> _departmentPositions = [];
+    
+    public Department(
+        Name name,
         Identifier identifier,
         short depth,
         Path path,
@@ -28,6 +34,10 @@ public class Department
     public Department? Parent { get; private set; }
 
     public IReadOnlyList<Department> Children => _children;
+
+    public IReadOnlyList<DepartmentLocation> DepartmentLocations => _departmentLocations;
+
+    public IReadOnlyList<DepartmentPosition> DepartmentPositions => _departmentPositions;
 
     public Path Path { get; private set; }
 
