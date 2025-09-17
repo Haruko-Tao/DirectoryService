@@ -2,6 +2,7 @@
 
 public class Department
 {
+    private List<Department> _children = [];
     public Department(Name name,
         Identifier identifier,
         short depth,
@@ -21,8 +22,12 @@ public class Department
     public Name Name { get; private set; }
 
     public Identifier Identifier { get; private set; }
-
+    
     public Guid? ParentId { get; private set; }
+    
+    public Department? Parent { get; private set; }
+
+    public IReadOnlyList<Department> Children => _children;
 
     public Path Path { get; private set; }
 
