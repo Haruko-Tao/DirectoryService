@@ -2,17 +2,19 @@
 
 public class Position
 {
-    public Position(Name name, Description description)
+    public record PositionId(Guid Value);
+    public Position(PositionId id, Name name, Description description)
     {
+        Id = id;
         Name = name;
         Description = description;
     }
     
-    public Guid Id { get; private set; }
+    public PositionId Id { get; private set; }
     
     public Name Name { get; private set; }
     
-    public Description? Description { get; private set; }
+    public Description Description { get; private set; }
     
     public bool IsActive { get; private set; }
     

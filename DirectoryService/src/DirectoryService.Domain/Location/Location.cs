@@ -2,14 +2,16 @@
 
 public class Location
 {
-    public Location(Name name, Address address, TimeZone timezone)
+    public record LocationId(Guid Value);
+    public Location(LocationId id, Name name, Address address, TimeZone timezone)
     {
+        Id = id;
         Name = name;
         Address = address;
         Timezone = timezone;
     }
 
-    public Guid Id { get; private set; }
+    public LocationId Id { get; private set; }
 
     public Name Name { get; private set; }
 

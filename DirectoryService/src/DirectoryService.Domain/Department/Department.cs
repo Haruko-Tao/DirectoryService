@@ -7,7 +7,7 @@ public class Department
     private List<DepartmentLocation> _departmentLocations = [];
 
     private List<DepartmentPosition> _departmentPositions = [];
-    
+   
     public Department(
         Name name,
         Identifier identifier,
