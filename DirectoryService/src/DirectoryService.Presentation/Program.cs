@@ -1,3 +1,5 @@
+using DirectoryService.Application;
+using DirectoryService.Application.Database;
 using DirectoryService.Infrastructure;
 
 namespace DirectoryService.Presentation;
@@ -11,8 +13,10 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
-        builder.Services.AddScoped<DirectoryServiceDbContext>(_ =>
+        builder.Services.AddScoped<IDirectoryServiceDbContext, DirectoryServiceDbContext>(_ =>
             new DirectoryServiceDbContext(builder.Configuration.GetConnectionString("DirectoryServiceDb")!));
+
+        builder.Services.AddScoped<CreateLocationHandle>();
 
         var app = builder.Build();
 
