@@ -1,9 +1,12 @@
-﻿using DirectoryService.Domain.Department;
+﻿using DirectoryService.Application;
+using DirectoryService.Application.Database;
+using DirectoryService.Domain;
+using DirectoryService.Domain.Department;
 using Microsoft.EntityFrameworkCore;
 
 namespace DirectoryService.Infrastructure;
 
-public class DirectoryServiceDbContext : DbContext
+public class DirectoryServiceDbContext : DbContext, IDirectoryServiceDbContext
 {
     private readonly string _connectionString;
 
@@ -23,4 +26,6 @@ public class DirectoryServiceDbContext : DbContext
     }
 
     public DbSet<Department> Departments => Set<Department>();
+
+    public DbSet<Location> Locations => Set<Location>();
 }
