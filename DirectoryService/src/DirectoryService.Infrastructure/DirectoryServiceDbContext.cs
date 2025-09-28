@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DirectoryService.Infrastructure;
 
-public class DirectoryServiceDbContext : DbContext, IDirectoryServiceDbContext
+public class DirectoryServiceDbContext : DbContext
 {
     private readonly string _connectionString;
 

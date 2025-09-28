@@ -1,6 +1,7 @@
 using DirectoryService.Application;
 using DirectoryService.Application.Database;
 using DirectoryService.Infrastructure;
+using DirectoryService.Infrastructure.Repositories;
 
 namespace DirectoryService.Presentation;
 
@@ -13,10 +14,12 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
-        builder.Services.AddScoped<IDirectoryServiceDbContext, DirectoryServiceDbContext>(_ =>
+        builder.Services.AddScoped<DirectoryServiceDbContext>(_ =>
             new DirectoryServiceDbContext(builder.Configuration.GetConnectionString("DirectoryServiceDb")!));
 
-        builder.Services.AddScoped<CreateLocationHandle>();
+        builder.Services.AddScoped<IDirectoryServiceRepository, EfCoreLocationRepository>();
+
+        builder.Services.AddScoped<CreateLocationHandler>();
 
         var app = builder.Build();
 
