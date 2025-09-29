@@ -1,4 +1,6 @@
-﻿namespace DirectoryService.Domain;
+﻿using CSharpFunctionalExtensions;
+
+namespace DirectoryService.Domain;
 
 public class Location
 {
@@ -24,4 +26,13 @@ public class Location
     public DateTime CreatedAt { get; private set; }
 
     public DateTime UpdatedAt { get; private set; }
+
+    public static Result<Location> Create(Name name, Address address, TimeZone timezone)
+    {
+        var id = new LocationId(Guid.NewGuid());
+        var location = new Location(id, name, address, timezone);
+
+        return Result.Success(location);
+    }
 }
+
