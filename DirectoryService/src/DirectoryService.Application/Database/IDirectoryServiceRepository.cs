@@ -1,4 +1,5 @@
 ﻿using DirectoryService.Domain;
+using DirectoryService.Domain.Location;
 
 namespace DirectoryService.Application.Database;
 

@@ -1,5 +1,6 @@
 ﻿using DirectoryService.Application.Database;
 using DirectoryService.Domain;
+using DirectoryService.Domain.Location;
 
 namespace DirectoryService.Infrastructure.Repositories;
 
