@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
+using Shared.Exceptions;
 
-namespace DirectoryService.Domain;
+namespace DirectoryService.Domain.Location;
 
 public class Location
 {
@@ -27,12 +28,12 @@ public class Location
 
     public DateTime UpdatedAt { get; private set; }
 
-    public static Result<Location> Create(Name name, Address address, TimeZone timezone)
+    public static Result<Location, Errors> Create(Name name, Address address, TimeZone timezone)
     {
         var id = new LocationId(Guid.NewGuid());
         var location = new Location(id, name, address, timezone);
 
-        return Result.Success(location);
+        return Result.Success<Location, Errors>(location);
     }
 }
 

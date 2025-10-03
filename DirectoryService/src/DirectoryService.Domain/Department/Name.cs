@@ -1,4 +1,7 @@
-﻿namespace DirectoryService.Domain.Department;
+﻿using CSharpFunctionalExtensions;
+using Shared.Exceptions;
+
+namespace DirectoryService.Domain.Department;
 
 public record Name
 {
@@ -8,9 +11,22 @@ public record Name
 
     public Name(string value)
     {
-        if (value.Length > MAX_LENGTH || string.IsNullOrWhiteSpace(value))
-            throw new ArgumentException("The name is too long for 150 characters or the name cannot be empty.");
-
         Value = value;
+    }
+    
+    public static Result<Name, Errors> Create(string value)
+    {
+        var errors = new List<Error>();
+
+        if (string.IsNullOrWhiteSpace(value))
+            errors.Add(GeneralErrors.Validation("name", "Name cannot be empty"));
+
+        if (value?.Length > MAX_LENGTH)
+            errors.Add(GeneralErrors.Validation("name", $"Name cannot be longer than {MAX_LENGTH} characters"));
+
+        if (errors.Any())
+            return Result.Failure<Name, Errors>(new Errors(errors));
+
+        return Result.Success<Name, Errors>(new Name(value));
     }
 }

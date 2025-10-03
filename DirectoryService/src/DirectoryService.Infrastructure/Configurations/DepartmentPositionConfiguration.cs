@@ -1,5 +1,7 @@
 ﻿using DirectoryService.Domain;
+using DirectoryService.Domain.Associations;
 using DirectoryService.Domain.Department;
+using DirectoryService.Domain.Position;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

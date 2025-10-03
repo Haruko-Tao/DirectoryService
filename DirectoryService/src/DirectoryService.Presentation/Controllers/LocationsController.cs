@@ -1,6 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
 using DirectoryService.Application;
+using DirectoryService.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using Shared.EndpointResult;
 
 namespace DirectoryService.Presentation.Controllers;
 
@@ -9,7 +11,7 @@ namespace DirectoryService.Presentation.Controllers;
 public class LocationsController : ControllerBase
 {
     [HttpPost]
-    public async Task<Result<Guid>> Create([FromServices] CreateLocationHandler handler,
+    public async Task<EndpointResult<Guid>> Create([FromServices] CreateLocationHandler handler,
         [FromBody] CreateLocationRequest request,
         CancellationToken cancellationToken)
     {

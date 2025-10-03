@@ -2,6 +2,7 @@
 using DirectoryService.Application.Database;
 using DirectoryService.Domain;
 using DirectoryService.Domain.Department;
+using DirectoryService.Domain.Location;
 using Microsoft.EntityFrameworkCore;
 
 namespace DirectoryService.Infrastructure;

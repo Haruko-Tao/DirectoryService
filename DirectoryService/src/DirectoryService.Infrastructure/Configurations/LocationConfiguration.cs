@@ -1,7 +1,8 @@
 ﻿using DirectoryService.Domain;
+using DirectoryService.Domain.Location;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using TimeZone = DirectoryService.Domain.TimeZone;
+using TimeZone = DirectoryService.Domain.Location.TimeZone;
 
 namespace DirectoryService.Infrastructure.Configurations;
 
@@ -18,7 +19,7 @@ public class LocationConfiguration : IEntityTypeConfiguration<Location>
             .HasColumnName("id");
 
         builder.Property(l => l.Name)
-            .HasConversion(l => l.Value, l => new Domain.Name(l))
+            .HasConversion(l => l.Value, l => new Name(l))
             .HasColumnName("name")
             .IsRequired()
             .HasMaxLength(500);
