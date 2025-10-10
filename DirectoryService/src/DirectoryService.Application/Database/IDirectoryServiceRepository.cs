@@ -1,9 +1,11 @@
-﻿using DirectoryService.Domain;
+﻿using CSharpFunctionalExtensions;
+using DirectoryService.Domain;
 using DirectoryService.Domain.Location;
+using Shared.Exceptions;
 
 namespace DirectoryService.Application.Database;
 
 public interface IDirectoryServiceRepository
 {
-    Task<Guid> Add(Location location, CancellationToken cancellationToken = default);
+    Task<Result<Guid, Errors>> Add(Location location, CancellationToken cancellationToken = default);
 }

@@ -39,7 +39,9 @@ public class CreateLocationHandler
         if (locationResult.IsFailure)
             return Result.Failure<Guid, Errors>(locationResult.Error);
 
-        await _locationRepository.Add(locationResult.Value, cancellationToken);
+        var addResult = await _locationRepository.Add(locationResult.Value, cancellationToken);
+        if (addressResult.IsFailure)
+            return Result.Failure<Guid, Errors>(new Errors(addressResult.Error));
 
         return Result.Success<Guid, Errors>(locationResult.Value.Id.Value);
     }
