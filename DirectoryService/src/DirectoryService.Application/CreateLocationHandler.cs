@@ -1,7 +1,10 @@
 ﻿using CSharpFunctionalExtensions;
 using DirectoryService.Application.Database;
+using DirectoryService.Contracts;
 using DirectoryService.Domain;
-using TimeZone = DirectoryService.Domain.TimeZone;
+using DirectoryService.Domain.Location;
+using Shared.Exceptions;
+using TimeZone = DirectoryService.Domain.Location.TimeZone;
 
 namespace DirectoryService.Application;
 
@@ -13,26 +16,34 @@ public class CreateLocationHandler
     {
         _locationRepository = locationRepository;
     }
-    public async Task<Result<Guid>> Handle(CreateLocationRequest request, CancellationToken cancellationToken)
+    public async Task<Result<Guid, Errors>> Handle(CreateLocationRequest request, CancellationToken cancellationToken)
     {
-        var nameResult = Domain.Name.Create(request.Name);
+        var errors = new List<Error>();
+
+        var nameResult = Name.Create(request.Name);
         if (nameResult.IsFailure)
-            return Result.Failure<Guid>(nameResult.Error);
+            errors.AddRange(nameResult.Error);
 
         var addressResult = Address.Create(request.Address);
         if (addressResult.IsFailure)
-            return Result.Failure<Guid>(addressResult.Error);
+            errors.AddRange(addressResult.Error);
 
         var timezoneResult = TimeZone.Create(request.Timezone);
         if (timezoneResult.IsFailure)
-            return Result.Failure<Guid>(timezoneResult.Error);
+            errors.AddRange(timezoneResult.Error);
+
+        if (errors.Any())
+            return Result.Failure<Guid, Errors>(new Errors(errors));
 
         var locationResult = Location.Create(nameResult.Value, addressResult.Value, timezoneResult.Value);
         if (locationResult.IsFailure)
-            return Result.Failure<Guid>(locationResult.Error);
+            return Result.Failure<Guid, Errors>(locationResult.Error);
 
-        await _locationRepository.Add(locationResult.Value, cancellationToken);
+        var addResult = await _locationRepository.Add(locationResult.Value, cancellationToken);
+        if (addressResult.IsFailure)
+            return Result.Failure<Guid, Errors>(new Errors(addressResult.Error));
 
-        return Result.Success(locationResult.Value.Id.Value);
+        return Result.Success<Guid, Errors>(locationResult.Value.Id.Value);
     }
+
 }

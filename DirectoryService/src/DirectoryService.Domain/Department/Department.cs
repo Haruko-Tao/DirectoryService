@@ -1,4 +1,6 @@
-﻿namespace DirectoryService.Domain.Department;
+﻿using DirectoryService.Domain.Associations;
+
+namespace DirectoryService.Domain.Department;
 
 public class Department
 {
